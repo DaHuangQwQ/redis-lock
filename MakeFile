@@ -1,0 +1,17 @@
+.PHONY: tidy
+tidy:
+	@go mod tidy -v
+
+# 单元测试
+.PHONY: ut
+ut:
+	@echo "运行单元测试中......"
+	@go test -race -failfast -count=1 ./...
+
+.PHONY: e2e_up
+e2e_up:
+	docker compose -p dbproxy -f .script/docker-compose.yaml up -d
+
+.PHONY: e2e_down
+e2e_down:
+	docker compose -p dbproxy -f .script/docker-compose.yaml down -v
